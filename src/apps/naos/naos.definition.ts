@@ -6,7 +6,7 @@ import { Network } from '~types/network.interface';
 export const NAOS_DEFINITION = appDefinition({
   id: 'naos',
   name: 'NAOS Finance',
-  description: `Earn competitive yield from income generating real world financial assets.`,
+  description: `A DeFi lending protocol allowing lenders and SME borrowers to facilitate permissionless and borderless loaning/borrowing transactions`,
   links: {
     github: 'https://github.com/NAOS-Finance',
     twitter: 'https://twitter.com/naos_finance',
@@ -15,11 +15,20 @@ export const NAOS_DEFINITION = appDefinition({
     medium: 'https://naosfinance.medium.com/',
   },
   groups: {
+    wallet: { id: 'wallet', type: GroupType.TOKEN },
+    boostPool: { id: 'boostPool', type: GroupType.POSITION },
     farm: { id: 'farm', type: GroupType.POSITION },
   },
   url: 'https://naos.finance/',
   tags: [AppTag.LENDING],
-  supportedNetworks: { [Network.ETHEREUM_MAINNET]: [AppAction.VIEW] },
+  supportedNetworks: {
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],
+  },
+  token: {
+    address: '0x4a615bB7166210CCe20E6642a6f8Fb5d4D044496',
+    network: Network.ETHEREUM_MAINNET,
+  },
 });
 
 @Register.AppDefinition(NAOS_DEFINITION.id)
