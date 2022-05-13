@@ -20,7 +20,7 @@ export class BinanceSmartChainNaosBalanceFetcher implements BalanceFetcher {
   async getStakedBalances(address: string) {
     const network = Network.BINANCE_SMART_CHAIN_MAINNET;
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<NaosBoostPool>({
-      address: "0x3dcd32dd2b225749aa830ca3b4f2411bfeb03db4",
+      address,
       appId: NAOS_DEFINITION.id,
       groupId: NAOS_DEFINITION.groups.boostPool.id,
       network,

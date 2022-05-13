@@ -6,6 +6,7 @@ import { EthereumNaosBalanceFetcher } from './ethereum/naos.balance-fetcher';
 import { EthereumNaosFarmContractPositionFetcher } from './ethereum/naos.farm.contract-position-fetcher';
 import { BinanceSmartChainNaosBalanceFetcher } from './binance/naos.balance-fetcher';
 import { BinanceSmartChainNaosFarmContractPositionFetcher } from './binance/naos.farm.contract-position-fetcher';
+import { BinanceSmartChainNaosBoostContractPositionFetcher } from './binance/naos.boost.contract-position-fetcher';
 import { NaosAppDefinition, NAOS_DEFINITION } from './naos.definition';
 
 @Register.AppModule({
@@ -16,6 +17,7 @@ import { NaosAppDefinition, NAOS_DEFINITION } from './naos.definition';
     EthereumNaosFarmContractPositionFetcher,
     EthereumNaosBalanceFetcher,
     BinanceSmartChainNaosFarmContractPositionFetcher,
+    BinanceSmartChainNaosBoostContractPositionFetcher,
     BinanceSmartChainNaosBalanceFetcher
   ],
   exports: [NaosContractFactory],
