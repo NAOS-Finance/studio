@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 
+import { TokenBalanceHelper } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
@@ -14,8 +15,18 @@ export class EthereumNaosBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT)
     private readonly appToolkit: IAppToolkit,
+    @Inject(TokenBalanceHelper) private readonly tokenBalanceHelper: TokenBalanceHelper,
     @Inject(NaosContractFactory) private readonly contractFactory: NaosContractFactory,
-  ) {}
+  ) { }
+
+  async getWalletBalances(address: string) {
+    return await this.tokenBalanceHelper.getTokenBalances({
+      network: Network.ETHEREUM_MAINNET,
+      appId: NAOS_DEFINITION.id,
+      groupId: NAOS_DEFINITION.groups.wallet.id,
+      address,
+    });
+  }
 
   async getStakedBalances(address: string) {
     const network = Network.ETHEREUM_MAINNET;
@@ -38,9 +49,16 @@ export class EthereumNaosBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [stakedBalances] = await Promise.all([this.getStakedBalances(address)]);
+    const [walletBalances, stakedBalances] = await Promise.all([
+      this.getWalletBalances(address),
+      this.getStakedBalances(address)
+    ]);
 
     return presentBalanceFetcherResponse([
+      {
+        label: 'Wallet',
+        assets: walletBalances,
+      },
       {
         label: 'Staking',
         assets: stakedBalances,
